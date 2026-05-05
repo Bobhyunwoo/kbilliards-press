@@ -177,7 +177,7 @@ async function generate() {
 - 주요 내용: ${document.getElementById('highlights').value||'없음'}
 - 담당자: ${document.getElementById('contactName').value||'대한당구연맹 사무국'}
 - 연락처: ${document.getElementById('contactTel').value||''}
-보도자료만 출력하세요.`;
+보도자료만 출력하세요. 마크다운 기호(##, **, * 등)는 절대 사용하지 말고 일반 텍스트로만 작성하세요.`;
 
   document.getElementById('placeholder').style.display = 'none';
   document.getElementById('pressOutput').classList.remove('visible');
