@@ -4,65 +4,60 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>대한당구연맹 보도자료 생성기</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --navy: #0a1628; --navy2: #0f2040; --gold: #c9a84c; --gold2: #e8c97a;
-    --white: #f8f6f1; --gray: #8a9ab5; --gray2: #4a5a72;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--navy); color: var(--white); font-family: 'Noto Sans KR', sans-serif; min-height: 100vh; background-image: radial-gradient(ellipse at 20% 20%, rgba(201,168,76,0.06) 0%, transparent 50%), radial-gradient(ellipse at 80% 80%, rgba(26,58,102,0.4) 0%, transparent 50%); }
-  header { border-bottom: 1px solid rgba(201,168,76,0.25); padding: 0 48px; display: flex; align-items: center; justify-content: space-between; height: 72px; background: rgba(10,22,40,0.95); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100; }
-  .logo-area { display: flex; align-items: center; gap: 14px; }
-  .logo-badge { width: 40px; height: 40px; background: linear-gradient(135deg, var(--gold), var(--gold2)); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: 'Noto Serif KR', serif; font-weight: 700; font-size: 18px; color: var(--navy); }
-  .logo-text { font-family: 'Noto Serif KR', serif; font-size: 15px; font-weight: 700; color: var(--white); line-height: 1.3; }
-  .logo-text span { display: block; font-size: 11px; font-weight: 400; color: var(--gold); letter-spacing: 0.08em; }
-  .header-right { font-size: 12px; color: var(--gray); letter-spacing: 0.05em; }
-  .container { max-width: 1280px; margin: 0 auto; padding: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
-  .panel { background: rgba(15,32,64,0.7); border: 1px solid rgba(201,168,76,0.15); border-radius: 16px; overflow: hidden; backdrop-filter: blur(6px); }
-  .panel-header { padding: 20px 28px; border-bottom: 1px solid rgba(201,168,76,0.12); display: flex; align-items: center; gap: 10px; background: rgba(10,22,40,0.5); }
-  .panel-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); }
-  .panel-title { font-family: 'Noto Serif KR', serif; font-size: 14px; font-weight: 600; color: var(--gold); letter-spacing: 0.05em; }
-  .panel-body { padding: 28px; }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
-  .form-row.full { grid-template-columns: 1fr; }
-  .field label { display: block; font-size: 11px; font-weight: 500; color: var(--gold); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
-  .field input, .field select, .field textarea { width: 100%; background: rgba(10,22,40,0.8); border: 1px solid rgba(201,168,76,0.2); border-radius: 8px; color: var(--white); font-family: 'Noto Sans KR', sans-serif; font-size: 13px; padding: 10px 14px; outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
-  .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.1); }
-  .field textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
-  .field select option { background: var(--navy2); }
-  .type-tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
-  .type-tab { padding: 7px 16px; border-radius: 20px; border: 1px solid rgba(201,168,76,0.25); background: transparent; color: var(--gray); font-family: 'Noto Sans KR', sans-serif; font-size: 12px; cursor: pointer; transition: all 0.2s; }
-  .type-tab:hover { border-color: var(--gold); color: var(--gold); }
-  .type-tab.active { background: var(--gold); border-color: var(--gold); color: var(--navy); font-weight: 700; }
-  .btn-generate { width: 100%; padding: 14px; background: linear-gradient(135deg, var(--gold) 0%, var(--gold2) 100%); color: var(--navy); border: none; border-radius: 10px; font-family: 'Noto Sans KR', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer; letter-spacing: 0.05em; transition: all 0.2s; margin-top: 8px; display: flex; align-items: center; justify-content: center; gap: 8px; }
-  .btn-generate:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(201,168,76,0.35); }
-  .btn-generate:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-  .output-toolbar { display: flex; gap: 8px; padding: 16px 28px; border-bottom: 1px solid rgba(201,168,76,0.12); background: rgba(10,22,40,0.3); flex-wrap: wrap; }
-  .btn-tool { padding: 6px 14px; border-radius: 6px; border: 1px solid rgba(201,168,76,0.2); background: transparent; color: var(--gray); font-family: 'Noto Sans KR', sans-serif; font-size: 11px; cursor: pointer; transition: all 0.2s; }
-  .btn-tool:hover { border-color: var(--gold); color: var(--gold); }
-  .output-area { padding: 28px; min-height: 500px; }
-  .placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 400px; gap: 16px; opacity: 0.4; }
-  .placeholder-icon { width: 64px; height: 64px; border: 2px solid var(--gold); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 28px; }
-  .placeholder p { font-size: 13px; color: var(--gray); text-align: center; line-height: 1.7; }
-  .press-output { display: none; animation: fadeIn 0.4s ease; }
-  .press-output.visible { display: block; }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-  .press-meta { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
-  .press-badge { padding: 4px 12px; border-radius: 4px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; }
-  .badge-type { background: var(--gold); color: var(--navy); }
-  .badge-date { background: rgba(201,168,76,0.1); color: var(--gold); border: 1px solid rgba(201,168,76,0.3); }
-  #pressText { width: 100%; background: transparent; border: none; color: var(--white); font-family: 'Noto Sans KR', sans-serif; font-size: 13px; line-height: 1.9; resize: none; outline: none; min-height: 420px; white-space: pre-wrap; }
-  .loading { display: none; flex-direction: column; align-items: center; justify-content: center; height: 400px; gap: 20px; }
-  .loading.visible { display: flex; }
-  .spinner { width: 40px; height: 40px; border: 3px solid rgba(201,168,76,0.2); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.8s linear infinite; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .loading p { font-size: 13px; color: var(--gray); }
-  .divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent); margin: 20px 0; }
-  .toast { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--gold); color: var(--navy); padding: 10px 24px; border-radius: 8px; font-weight: 700; font-size: 13px; opacity: 0; transition: all 0.3s; z-index: 999; }
-  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-  @media (max-width: 900px) { .container { grid-template-columns: 1fr; padding: 24px; } header { padding: 0 24px; } .form-row { grid-template-columns: 1fr; } }
+:root{--navy:#0a1628;--navy2:#0f2040;--gold:#c9a84c;--gold2:#e8c97a;--white:#f8f6f1;--gray:#8a9ab5;--gray2:#4a5a72}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--navy);color:var(--white);font-family:'Noto Sans KR',sans-serif;min-height:100vh}
+header{border-bottom:1px solid rgba(201,168,76,.25);padding:0 48px;display:flex;align-items:center;justify-content:space-between;height:72px;background:rgba(10,22,40,.95);position:sticky;top:0;z-index:100}
+.logo-area{display:flex;align-items:center;gap:14px}
+.logo-badge{width:40px;height:40px;background:linear-gradient(135deg,var(--gold),var(--gold2));border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Noto Serif KR',serif;font-weight:700;font-size:18px;color:var(--navy)}
+.logo-text{font-family:'Noto Serif KR',serif;font-size:15px;font-weight:700;color:var(--white);line-height:1.3}
+.logo-text span{display:block;font-size:11px;font-weight:400;color:var(--gold);letter-spacing:.08em}
+.container{max-width:1280px;margin:0 auto;padding:48px;display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start}
+.panel{background:rgba(15,32,64,.7);border:1px solid rgba(201,168,76,.15);border-radius:16px;overflow:hidden}
+.panel-header{padding:20px 28px;border-bottom:1px solid rgba(201,168,76,.12);display:flex;align-items:center;gap:10px;background:rgba(10,22,40,.5)}
+.panel-dot{width:8px;height:8px;border-radius:50%;background:var(--gold)}
+.panel-title{font-family:'Noto Serif KR',serif;font-size:14px;font-weight:600;color:var(--gold)}
+.panel-body{padding:28px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.form-row.full{grid-template-columns:1fr}
+.field label{display:block;font-size:11px;font-weight:500;color:var(--gold);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.field input,.field select,.field textarea{width:100%;background:rgba(10,22,40,.8);border:1px solid rgba(201,168,76,.2);border-radius:8px;color:var(--white);font-family:'Noto Sans KR',sans-serif;font-size:13px;padding:10px 14px;outline:none;transition:border-color .2s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold)}
+.field textarea{resize:vertical;min-height:80px;line-height:1.6}
+.field select option{background:var(--navy2)}
+.type-tabs{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
+.type-tab{padding:7px 16px;border-radius:20px;border:1px solid rgba(201,168,76,.25);background:transparent;color:var(--gray);font-family:'Noto Sans KR',sans-serif;font-size:12px;cursor:pointer;transition:all .2s}
+.type-tab:hover{border-color:var(--gold);color:var(--gold)}
+.type-tab.active{background:var(--gold);border-color:var(--gold);color:var(--navy);font-weight:700}
+.btn-generate{width:100%;padding:14px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--navy);border:none;border-radius:10px;font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:700;cursor:pointer;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s}
+.btn-generate:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(201,168,76,.35)}
+.btn-generate:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.output-toolbar{display:flex;gap:8px;padding:16px 28px;border-bottom:1px solid rgba(201,168,76,.12);background:rgba(10,22,40,.3)}
+.btn-tool{padding:6px 14px;border-radius:6px;border:1px solid rgba(201,168,76,.2);background:transparent;color:var(--gray);font-family:'Noto Sans KR',sans-serif;font-size:11px;cursor:pointer;transition:all .2s}
+.btn-tool:hover{border-color:var(--gold);color:var(--gold)}
+.output-area{padding:28px;min-height:500px}
+.placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;height:400px;gap:16px;opacity:.4}
+.placeholder-icon{width:64px;height:64px;border:2px solid var(--gold);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:28px}
+.placeholder p{font-size:13px;color:var(--gray);text-align:center;line-height:1.7}
+.press-output{display:none;animation:fadeIn .4s ease}
+.press-output.visible{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.press-meta{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.press-badge{padding:4px 12px;border-radius:4px;font-size:11px;font-weight:700;letter-spacing:.06em}
+.badge-type{background:var(--gold);color:var(--navy)}
+.badge-date{background:rgba(201,168,76,.1);color:var(--gold);border:1px solid rgba(201,168,76,.3)}
+#pressText{width:100%;background:transparent;border:none;color:var(--white);font-family:'Noto Sans KR',sans-serif;font-size:13px;line-height:1.9;resize:none;outline:none;min-height:420px;white-space:pre-wrap}
+.loading{display:none;flex-direction:column;align-items:center;justify-content:center;height:400px;gap:20px}
+.loading.visible{display:flex}
+.spinner{width:40px;height:40px;border:3px solid rgba(201,168,76,.2);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading p{font-size:13px;color:var(--gray)}
+.divider{height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.3),transparent);margin:20px 0}
+.toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--gold);color:var(--navy);padding:10px 24px;border-radius:8px;font-weight:700;font-size:13px;opacity:0;transition:all .3s;z-index:999}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:900px){.container{grid-template-columns:1fr;padding:24px}header{padding:0 24px}.form-row{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -71,14 +66,14 @@
     <div class="logo-badge">당</div>
     <div class="logo-text">대한당구연맹<span>KOREA BILLIARDS FEDERATION</span></div>
   </div>
-  <div class="header-right">보도자료 자동 생성 시스템 v1.0</div>
+  <div style="font-size:12px;color:var(--gray)">보도자료 자동 생성 시스템 v1.0</div>
 </header>
 <div class="container">
   <div class="panel">
     <div class="panel-header"><div class="panel-dot"></div><span class="panel-title">대회 정보 입력</span></div>
     <div class="panel-body">
-      <div style="margin-bottom:20px;">
-        <div style="font-size:11px;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;">보도자료 유형</div>
+      <div style="margin-bottom:20px">
+        <div style="font-size:11px;color:var(--gold);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">보도자료 유형</div>
         <div class="type-tabs">
           <button class="type-tab active" data-type="대회결과">대회 결과</button>
           <button class="type-tab" data-type="선발전">국가대표 선발전</button>
@@ -100,7 +95,7 @@
         <div class="field"><label>참가 규모</label><input type="text" id="participants" placeholder="예: 선수 128명, 16개국"></div>
       </div>
       <div class="divider"></div>
-      <div style="font-size:11px;color:var(--gold);letter-spacing:0.08em;margin-bottom:12px;">▷ 결과 정보</div>
+      <div style="font-size:11px;color:var(--gold);letter-spacing:.08em;margin-bottom:12px">▷ 결과 정보</div>
       <div class="form-row">
         <div class="field"><label>우승자</label><input type="text" id="winner" placeholder="예: 김철수 (대한민국)"></div>
         <div class="field"><label>준우승</label><input type="text" id="runnerUp" placeholder="예: 이영희 (대한민국)"></div>
@@ -116,30 +111,22 @@
         <div class="field"><label>담당자 이름</label><input type="text" id="contactName" placeholder="예: 홍길동"></div>
         <div class="field"><label>담당자 연락처</label><input type="text" id="contactTel" placeholder="예: 02-1234-5678"></div>
       </div>
-      <button class="btn-generate" id="generateBtn" onclick="generatePressRelease()">
-        <span>✦</span><span id="btnText">보도자료 생성하기</span>
-      </button>
+      <button class="btn-generate" id="generateBtn" onclick="generate()"><span>✦</span><span id="btnText">보도자료 생성하기</span></button>
     </div>
   </div>
-  <div class="panel" style="position:sticky;top:88px;">
+  <div class="panel" style="position:sticky;top:88px">
     <div class="panel-header"><div class="panel-dot"></div><span class="panel-title">생성된 보도자료</span></div>
     <div class="output-toolbar">
       <button class="btn-tool" onclick="copyText()">⎘ 복사</button>
-      <button class="btn-tool" onclick="regenerate()">↺ 재생성</button>
+      <button class="btn-tool" onclick="generate()">↺ 재생성</button>
       <button class="btn-tool" onclick="clearOutput()">✕ 초기화</button>
-      <div style="margin-left:auto;font-size:11px;color:var(--gray2);align-self:center;" id="charInfo"></div>
+      <div style="margin-left:auto;font-size:11px;color:var(--gray2);align-self:center" id="charInfo"></div>
     </div>
     <div class="output-area">
-      <div class="placeholder" id="placeholder">
-        <div class="placeholder-icon">📋</div>
-        <p>좌측 정보를 입력 후<br>보도자료 생성 버튼을 클릭하세요</p>
-      </div>
+      <div class="placeholder" id="placeholder"><div class="placeholder-icon">📋</div><p>좌측 정보를 입력 후<br>보도자료 생성 버튼을 클릭하세요</p></div>
       <div class="loading" id="loading"><div class="spinner"></div><p>보도자료를 작성하고 있습니다...</p></div>
       <div class="press-output" id="pressOutput">
-        <div class="press-meta">
-          <span class="press-badge badge-type" id="badgeType">대회 결과</span>
-          <span class="press-badge badge-date" id="badgeDate"></span>
-        </div>
+        <div class="press-meta"><span class="press-badge badge-type" id="badgeType">대회 결과</span><span class="press-badge badge-date" id="badgeDate"></span></div>
         <textarea id="pressText" spellcheck="false"></textarea>
       </div>
     </div>
@@ -147,10 +134,10 @@
 </div>
 <div class="toast" id="toast">복사되었습니다</div>
 <script>
-// ★ 여기에 Gemini API 키 입력
-const GEMINI_API_KEY = "AIzaSyBB6UbcO5a4rZ28fvnE4MBd_u5bM3tcb_M";
-
+const API_KEY = "AIzaSyBB6UbcO5a4rZ28fvnE4MBd_u5bM3tcb_M";
+const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=" + API_KEY;
 let currentType = '대회결과';
+
 document.querySelectorAll('.type-tab').forEach(tab => {
   tab.addEventListener('click', () => {
     document.querySelectorAll('.type-tab').forEach(t => t.classList.remove('active'));
@@ -158,28 +145,23 @@ document.querySelectorAll('.type-tab').forEach(tab => {
     currentType = tab.dataset.type;
   });
 });
-const pressText = document.getElementById('pressText');
-pressText.addEventListener('input', () => {
-  pressText.style.height = 'auto';
-  pressText.style.height = pressText.scrollHeight + 'px';
-  document.getElementById('charInfo').textContent = pressText.value.length > 0 ? pressText.value.length.toLocaleString() + '자' : '';
+
+document.getElementById('pressText').addEventListener('input', function() {
+  this.style.height = 'auto';
+  this.style.height = this.scrollHeight + 'px';
+  document.getElementById('charInfo').textContent = this.value.length > 0 ? this.value.length.toLocaleString() + '자' : '';
 });
 
-async function generatePressRelease() {
+async function generate() {
   const name = document.getElementById('tournamentName').value.trim();
   if (!name) { alert('대회명을 입력해주세요.'); return; }
 
   const prompt = `당신은 대한당구연맹(Korea Billiards Federation)의 공식 보도자료 담당자입니다.
 아래 대회 정보를 바탕으로 언론사에 배포할 공식 보도자료를 작성해주세요.
-
 [작성 규칙]
-- 공식적이고 격조 있는 문체 사용 (뉴스 보도자료 형식)
-- 제목은 간결하고 임팩트 있게
-- 구성: 제목 → 부제 → 발표일 및 배포처 → 본문(3~4단락) → 연맹 소개 → 문의처
-- 본문 첫 단락에 핵심 내용(5W1H) 요약
-- 인용구는 연맹 관계자 멘트로 자연스럽게 삽입
+- 공식적이고 격조 있는 문체 사용
+- 구성: 제목 → 부제 → 발표일 → 본문(3~4단락) → 연맹 소개 → 문의처
 - 총 분량: 600~900자 내외
-
 [대회 정보]
 - 유형: ${currentType}
 - 대회명: ${name}
@@ -187,15 +169,14 @@ async function generatePressRelease() {
 - 일정: ${document.getElementById('date').value}
 - 장소: ${document.getElementById('venue').value}
 - 종목: ${document.getElementById('discipline').value}
-- 참가 규모: ${document.getElementById('participants').value || '미입력'}
-- 우승: ${document.getElementById('winner').value || '미입력'}
-- 준우승: ${document.getElementById('runnerUp').value || '미입력'}
-- 우승 상금: ${document.getElementById('prize').value || '미입력'}
-- 총 상금: ${document.getElementById('totalPrize').value || '미입력'}
-- 주요 내용: ${document.getElementById('highlights').value || '없음'}
-- 담당자: ${document.getElementById('contactName').value || '대한당구연맹 사무국'}
-- 연락처: ${document.getElementById('contactTel').value || ''}
-
+- 참가 규모: ${document.getElementById('participants').value||'미입력'}
+- 우승: ${document.getElementById('winner').value||'미입력'}
+- 준우승: ${document.getElementById('runnerUp').value||'미입력'}
+- 우승 상금: ${document.getElementById('prize').value||'미입력'}
+- 총 상금: ${document.getElementById('totalPrize').value||'미입력'}
+- 주요 내용: ${document.getElementById('highlights').value||'없음'}
+- 담당자: ${document.getElementById('contactName').value||'대한당구연맹 사무국'}
+- 연락처: ${document.getElementById('contactTel').value||''}
 보도자료만 출력하세요.`;
 
   document.getElementById('placeholder').style.display = 'none';
@@ -203,23 +184,24 @@ async function generatePressRelease() {
   document.getElementById('loading').classList.add('visible');
   document.getElementById('generateBtn').disabled = true;
   document.getElementById('btnText').textContent = '생성 중...';
-  document.getElementById('badgeDate').textContent = new Date().toLocaleDateString('ko-KR', {year:'numeric',month:'long',day:'numeric'});
+  document.getElementById('badgeDate').textContent = new Date().toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'});
   document.getElementById('badgeType').textContent = currentType;
 
   try {
-    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`, {
+    const res = await fetch(API_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig: { maxOutputTokens: 1500 } })
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{maxOutputTokens:1500}})
     });
     const data = await res.json();
     if (data.error) throw new Error(data.error.message);
     const text = data.candidates[0].content.parts[0].text;
     document.getElementById('loading').classList.remove('visible');
     document.getElementById('pressOutput').classList.add('visible');
-    pressText.value = text;
-    pressText.style.height = 'auto';
-    pressText.style.height = pressText.scrollHeight + 'px';
+    const pt = document.getElementById('pressText');
+    pt.value = text;
+    pt.style.height = 'auto';
+    pt.style.height = pt.scrollHeight + 'px';
     document.getElementById('charInfo').textContent = text.length.toLocaleString() + '자';
   } catch(e) {
     document.getElementById('loading').classList.remove('visible');
@@ -230,16 +212,18 @@ async function generatePressRelease() {
   document.getElementById('btnText').textContent = '보도자료 생성하기';
 }
 
-function regenerate() { if (document.getElementById('tournamentName').value) generatePressRelease(); }
 function copyText() {
-  if (!pressText.value) return;
-  navigator.clipboard.writeText(pressText.value).then(() => {
-    const t = document.getElementById('toast'); t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2000);
+  const t = document.getElementById('pressText');
+  if (!t.value) return;
+  navigator.clipboard.writeText(t.value).then(() => {
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2000);
   });
 }
+
 function clearOutput() {
-  pressText.value = '';
+  document.getElementById('pressText').value = '';
   document.getElementById('pressOutput').classList.remove('visible');
   document.getElementById('placeholder').style.display = 'flex';
   document.getElementById('charInfo').textContent = '';
